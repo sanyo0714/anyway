@@ -81,6 +81,7 @@ public class LaunchWorker {
 	// 第八步 UPDATE geoblocks t SET t.`sidx` ='16777215' WHERE t.`sidx` != t.`eidx`;
 	
 	
+	
 	/*
 	 * 检测sql
 	 * SELECT g.*,i.ip_start FROM geoblocks g ,ip_standard i WHERE g.locId = CONCAT(i.country,i.province,i.city,i.town,i.address,i.operator);

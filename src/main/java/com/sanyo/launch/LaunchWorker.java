@@ -78,11 +78,19 @@ public class LaunchWorker {
 	
 	// 第七步 修改 geoblocks  locId int 11位
 	
+	// 第八步 UPDATE geoblocks t SET t.`sidx` ='16777215' WHERE t.`sidx` != t.`eidx`;
+	
 	
 	/*
 	 * 检测sql
 	 * SELECT g.*,i.ip_start FROM geoblocks g ,ip_standard i WHERE g.locId = CONCAT(i.country,i.province,i.city,i.town,i.address,i.operator);
 	 * SELECT a.locId,b.locId FROM geoblocks a LEFT JOIN geolocation b ON (a.locId = CONCAT(b.country,b.province,b.city,b.town,b.address,b.operator));
+	 * 
+	 * 
+	 * select * from (select t.`sidx`,count(1) as ct from geoblocks t where t.`sidx` = t.`eidx` group by t.`sidx`) a order by a.sidx asc;# max 4294901760   min 16777216
+	 * SELECT * FROM (SELECT t.`sidx`,COUNT(1) AS ct FROM geoblocks t WHERE t.`sidx` != t.`eidx` GROUP BY t.`sidx`) a ORDER BY a.sidx desc;#max 4026531840 min 17170432
+	 * 
+	 * 
 	 */
 	
 

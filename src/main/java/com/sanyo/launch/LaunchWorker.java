@@ -89,7 +89,8 @@ public class LaunchWorker {
 	 * 
 	 * select * from (select t.`sidx`,count(1) as ct from geoblocks t where t.`sidx` = t.`eidx` group by t.`sidx`) a order by a.sidx asc;# max 4294901760   min 16777216
 	 * SELECT * FROM (SELECT t.`sidx`,COUNT(1) AS ct FROM geoblocks t WHERE t.`sidx` != t.`eidx` GROUP BY t.`sidx`) a ORDER BY a.sidx desc;#max 4026531840 min 17170432
-	 * 
+	 * select count(1) from geoblocks t where t.`sidx` = t.`eidx`;#154693
+	 * SELECT COUNT(1) FROM geoblocks t WHERE t.`sidx` != t.`eidx`;#4997
 	 * 
 	 */
 	

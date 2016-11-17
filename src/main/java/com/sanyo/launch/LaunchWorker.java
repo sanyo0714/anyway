@@ -15,9 +15,7 @@ import com.sanyo.tools.SQLCallback;
 
 public class LaunchWorker {
 
-	
-	
-	//第一步 建表
+	// 第一步 建表
 	// DROP TABLE IF EXISTS `ip_standard`;
 	//
 	// CREATE TABLE `ip_standard` (
@@ -33,7 +31,7 @@ public class LaunchWorker {
 	// `province_cn` varchar(30) DEFAULT NULL,
 	// PRIMARY KEY (`ip_start`,`ip_end`)
 	// ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+	//
 	// /*Table structure for table `geoblocks` */
 	//
 	// DROP TABLE IF EXISTS `geoblocks`;
@@ -63,38 +61,48 @@ public class LaunchWorker {
 	// `operator` text,
 	// PRIMARY KEY (`locId`)
 	// ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-	
-	
-	
+	//
+
 	// 第二步执行 launch worker
-	
-	// 第三步 执行INSERT INTO geolocation(country,province,city,town,address,operator,locId) SELECT country,province,city,town,address,operator,@rownum:=@rownum+1 AS rownum FROM (SELECT @rownum:=0) r,(SELECT country,province,city,town,address,operator FROM ip_standard GROUP BY country,province,city,town,address,operator) a;
-	
-	// 第四步 修改 geoblocks  locId text 
-	
-	// 第五步 执行INSERT INTO geoblocks( startIpNum, endIpNum, sidx ,eidx ,locId) SELECT ip_start,ip_end,(ip_start - (ip_start % 65536)) AS s,(ip_end - (ip_end % 65536)) AS e,CONCAT(country,province,city,town,address,operator) AS ro FROM ip_standard ORDER BY ip_start;
-	
-	// 第六步 执行UPDATE geoblocks t SET t.locId = (SELECT locId FROM geolocation WHERE CONCAT(country,province,city,town,address,operator) = t.locId);
-	
-	// 第七步 修改 geoblocks  locId int 11位
-	
-	// 第八步 UPDATE geoblocks t SET t.`sidx` ='16777215' WHERE t.`sidx` != t.`eidx`;
-	
-	
-	
+
+	// 第三步 执行INSERT INTO
+	// geolocation(country,province,city,town,address,operator,locId) SELECT
+	// country,province,city,town,address,operator,@rownum:=@rownum+1 AS rownum
+	// FROM (SELECT @rownum:=0) r,(SELECT
+	// country,province,city,town,address,operator FROM ip_standard GROUP BY
+	// country,province,city,town,address,operator) a;
+
+	// 第四步 修改 geoblocks locId text
+
+	// 第五步 执行INSERT INTO geoblocks( startIpNum, endIpNum, sidx ,eidx ,locId)
+	// SELECT ip_start,ip_end,(ip_start - (ip_start % 65536)) AS s,(ip_end -
+	// (ip_end % 65536)) AS
+	// e,CONCAT(country,province,city,town,address,operator) AS ro FROM
+	// ip_standard ORDER BY ip_start;
+
+	// 第六步 执行UPDATE geoblocks t SET t.locId = (SELECT locId FROM geolocation
+	// WHERE CONCAT(country,province,city,town,address,operator) = t.locId);
+
+	// 第七步 修改 geoblocks locId int 11位
+
+	// 第八步 UPDATE geoblocks t SET t.`sidx` ='16777215' WHERE t.`sidx` !=
+	// t.`eidx`;
+
 	/*
-	 * 检测sql
-	 * SELECT g.*,i.ip_start FROM geoblocks g ,ip_standard i WHERE g.locId = CONCAT(i.country,i.province,i.city,i.town,i.address,i.operator);
-	 * SELECT a.locId,b.locId FROM geoblocks a LEFT JOIN geolocation b ON (a.locId = CONCAT(b.country,b.province,b.city,b.town,b.address,b.operator));
+	 * 检测sql SELECT g.*,i.ip_start FROM geoblocks g ,ip_standard i WHERE g.locId
+	 * = CONCAT(i.country,i.province,i.city,i.town,i.address,i.operator); SELECT
+	 * a.locId,b.locId FROM geoblocks a LEFT JOIN geolocation b ON (a.locId =
+	 * CONCAT(b.country,b.province,b.city,b.town,b.address,b.operator));
 	 * 
 	 * 
-	 * select * from (select t.`sidx`,count(1) as ct from geoblocks t where t.`sidx` = t.`eidx` group by t.`sidx`) a order by a.sidx asc;# max 4294901760   min 16777216
-	 * SELECT * FROM (SELECT t.`sidx`,COUNT(1) AS ct FROM geoblocks t WHERE t.`sidx` != t.`eidx` GROUP BY t.`sidx`) a ORDER BY a.sidx desc;#max 4026531840 min 17170432
-	 * select count(1) from geoblocks t where t.`sidx` = t.`eidx`;#154693
-	 * SELECT COUNT(1) FROM geoblocks t WHERE t.`sidx` != t.`eidx`;#4997
-	 * 
+	 * select * from (select t.`sidx`,count(1) as ct from geoblocks t where
+	 * t.`sidx` = t.`eidx` group by t.`sidx`) a order by a.sidx asc;# max
+	 * 4294901760 min 16777216 SELECT * FROM (SELECT t.`sidx`,COUNT(1) AS ct
+	 * FROM geoblocks t WHERE t.`sidx` != t.`eidx` GROUP BY t.`sidx`) a ORDER BY
+	 * a.sidx desc;#max 4026531840 min 17170432 select count(1) from geoblocks t
+	 * where t.`sidx` = t.`eidx`;#154693 SELECT COUNT(1) FROM geoblocks t WHERE
+	 * t.`sidx` != t.`eidx`;#4997
 	 */
-	
 
 	private static final String INSERT_SQL = "insert into ip_standard(ip_start,ip_end,country,province,city,town,address,operator) values(?, ?, ?, ?, ?,?,?, ?)";
 

@@ -3,9 +3,14 @@ package com.sanyo.tools;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.sanyo.launch.LaunchWorker;
 
 public class SQLiteConn implements Serializable {
 	private static final long serialVersionUID = 102400L;
+	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	/**
 	 * 与SQLite嵌入式数据库建立连接
@@ -18,8 +23,10 @@ public class SQLiteConn implements Serializable {
 		try {
 			Class.forName("org.sqlite.JDBC", true, this.getClass()
 					.getClassLoader());
-			connection = DriverManager
-					.getConnection("jdbc:sqlite:D:/tools/demo_lib/sqlite/geo1.db");
+			String path = LaunchWorker.class.getClassLoader().getResource("")
+					.getPath();
+			connection = DriverManager.getConnection("jdbc:sqlite:" + path
+					+ "geo-" + format.format(new Date()) + ".db");
 			connection.setAutoCommit(false);
 		} catch (Exception e) {
 			throw new Exception("" + e.getLocalizedMessage(), new Throwable(

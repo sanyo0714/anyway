@@ -25,7 +25,7 @@ public class MySQLDB {
 	/**
 	 * 定义连接mysql的驱动器.
 	 */
-	private static String url = "jdbc:mysql://127.0.0.1:3306/world?useUnicode=yes&characterEncoding=UTF-8";
+	private static String url = "jdbc:mysql://127.0.0.1:3306/ipdb?useUnicode=yes&characterEncoding=UTF-8";
 	/**
 	 * 定义连接mysql的驱动器.
 	 */

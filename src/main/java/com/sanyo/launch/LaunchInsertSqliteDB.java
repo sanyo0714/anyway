@@ -1,6 +1,7 @@
 package com.sanyo.launch;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -42,12 +43,16 @@ public class LaunchInsertSqliteDB {
 		// TODO Auto-generated method stub
 		long l = StringUtils.ipToLong("175.167.136.217");
 		System.out.println(l);
+		l = StringUtils.ipToLong("10.18.33.4");
+		System.out.println(l);
+		System.exit(0);
 
 		if ("".equals(null)) {
 			System.out.println(1);
 		}
 
 		SQLiteConn sc = new SQLiteConn();
+		
 		final SQLiteCRUD scrud = new SQLiteCRUD(sc.getConnection());
 
 		MySQLDB.doMySQL(new SQLCallback() {
